@@ -66,9 +66,9 @@
         }
 
         /// <inheritdoc />
-        public override Task<object> ReadFromStreamAsync(Type type, Stream readStream, HttpContent content, IFormatterLogger formatterLogger)
+        public override async Task<object> ReadFromStreamAsync(Type type, Stream readStream, HttpContent content, IFormatterLogger formatterLogger)
         {
-            return ReadFromStreamAsync(type, readStream, content, formatterLogger, CancellationToken.None);
+            return await ReadFromStreamAsync(type, readStream, content, formatterLogger, CancellationToken.None);
         }
 
         /// <inheritdoc />
@@ -87,9 +87,9 @@
         }
 
         /// <inheritdoc />
-        public override Task WriteToStreamAsync(Type type, object value, Stream writeStream, HttpContent content, TransportContext transportContext)
+        public override async Task WriteToStreamAsync(Type type, object value, Stream writeStream, HttpContent content, TransportContext transportContext)
         {
-            return WriteToStreamAsync(type, value, writeStream, content, transportContext, CancellationToken.None);
+            await WriteToStreamAsync(type, value, writeStream, content, transportContext, CancellationToken.None);
         }
 
         /// <inheritdoc />

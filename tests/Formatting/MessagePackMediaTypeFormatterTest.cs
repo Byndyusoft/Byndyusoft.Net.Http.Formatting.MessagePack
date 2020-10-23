@@ -25,13 +25,36 @@
         private readonly MessagePackMediaTypeFormatter _formatter = new MessagePackMediaTypeFormatter();
 
         [Fact]
+        public void DefaultConstructor()
+        {
+            // Act
+            var formatter = new MessagePackMediaTypeFormatter();
+
+            // Assert
+            Assert.NotNull(formatter.Options);
+        }
+        
+        [Fact]
         public void CopyConstructor()
         {
             // Act
             var copy = new MessagePackMediaTypeFormatter(_formatter);
 
-            // Arrange
+            // Assert
             Assert.Same(_formatter.Options, copy.Options);
+        }
+
+        [Fact]
+        public void ConstructorWithOptions()
+        {
+            // Arrange
+            var options = MessagePackSerializerOptions.Standard;
+
+            // Act
+            var formatter = new MessagePackMediaTypeFormatter(options);
+
+            // Assert
+            Assert.Same(options, formatter.Options);
         }
 
         [Theory]
