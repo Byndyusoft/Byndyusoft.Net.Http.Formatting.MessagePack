@@ -35,6 +35,7 @@ You also get extension methods to PUT / POST back to the service in ```MessagePa
 ```
 // Save the ProductInfo model back to the API service
 await client.PutAsMessagePackAsync("http://localhost/api/products/1", product);
+await client.PostAsMessagePackAsync("http://localhost/api/products/1", product);
 ```
 
 ## Installing
