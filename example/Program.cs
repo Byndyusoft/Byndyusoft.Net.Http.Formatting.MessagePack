@@ -39,7 +39,7 @@ namespace Byndyusoft.Net.Http.Formatting.MessagePack.Example
             };
 
             var httpClient = new HttpClient();
-            httpClient.DefaultRequestHeaders.Accept.Add(MessagePackMediaTypeFormatter.DefaultMediaTypeHeaderValue);
+            httpClient.DefaultRequestHeaders.Accept.Add(MessagePackMediaTypeFormatter.DefaultMediaType);
 
             var post = await httpClient.PostAsMessagePackAsync("http://localhost:8080/peoples", people);
             post.EnsureSuccessStatusCode();

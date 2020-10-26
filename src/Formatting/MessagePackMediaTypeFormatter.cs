@@ -15,7 +15,7 @@
     /// </summary>
     public class MessagePackMediaTypeFormatter : MediaTypeFormatter
     {
-        public static readonly MediaTypeWithQualityHeaderValue DefaultMediaTypeHeaderValue = MessagePackMediaTypeHeaderValues.ApplicationXMessagePack;
+        public static MediaTypeWithQualityHeaderValue DefaultMediaType => MessagePackMediaTypeHeaderValues.ApplicationXMessagePack;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MessagePackMediaTypeFormatter"/> class.

@@ -52,8 +52,6 @@
             T value,
             MessagePackSerializerOptions options)
         {
-            if (options == null) throw new ArgumentNullException(nameof(options));
-
             return client.PostAsMessagePackAsync(requestUri, value, options, CancellationToken.None);
         }
 
