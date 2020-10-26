@@ -26,7 +26,7 @@ namespace Byndyusoft.Net.Http.Formatting.MessagePack.Example
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                    webBuilder.UseUrls("http://*:8080");
+                    webBuilder.UseUrls("http://localhost:8080");
                 });
 
         private static async Task MakeCallsAsync()
