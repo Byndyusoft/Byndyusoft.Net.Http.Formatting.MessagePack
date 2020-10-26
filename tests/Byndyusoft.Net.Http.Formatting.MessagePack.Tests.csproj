@@ -3,7 +3,7 @@
   <PropertyGroup>
     <RootNamespace>System.Net.Http</RootNamespace>
     <IsPackable>false</IsPackable>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>

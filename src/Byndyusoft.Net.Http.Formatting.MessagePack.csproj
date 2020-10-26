@@ -3,6 +3,14 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>System.Net.Http</RootNamespace>
+    <PackageVersion>0.1.0</PackageVersion>
+    <PackageId>Byndyusoft.Net.Http.Formatting.MessagePack</PackageId>
+    <Title>Byndyusoft.Net.Http.Formatting.MessagePack</Title>
+    <Authors>Byndyusoft</Authors>
+    <Description>This package adds support for MessagePack formatting and content negotiation to System.Net.Http</Description>
+    <PackageTags>Byndyusoft;MessagePack;HttpClient;WebApi;AspNet</PackageTags>
+    <RepositoryUrl>https://github.com/Byndyusoft/Byndyusoft.Net.Http.Formatting.MessagePack</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
   <ItemGroup>
