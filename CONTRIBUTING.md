@@ -10,7 +10,7 @@ today! Here are the guidelines we'd like you to follow:
 
 ## <a name="question"></a>Where to ask Questions?
 
-Questions can be asked in form of issues. Also feel free asking questions to the [maintainers](https://github.com/Byndyusoft/Byndyusoft.Net.Http.Formatting.MessagePack#maintainers)
+Questions can be asked in form of issues. Also feel free asking questions to the [maintainers](README.md#maintainers)
 
 ## <a name="issue"></a> Found an Issue or Bug?
 
