@@ -91,8 +91,10 @@
         }
 
         [Theory]
+        [InlineData(typeof(IInterface), false)]
+        [InlineData(typeof(AbstractClass), false)]
+        [InlineData(typeof(NonPublicClass), false)]
         [InlineData(typeof(Dictionary<string, object>), true)]
-        [InlineData(typeof(IAsyncResult), false)]
         [InlineData(typeof(string), true)]
         [InlineData(typeof(SimpleType), true)]
         [InlineData(typeof(ComplexType), true)]
