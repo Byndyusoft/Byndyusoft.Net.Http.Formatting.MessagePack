@@ -2,29 +2,20 @@
 {
     using Formatting;
     using MessagePack;
-    using Server;
     using Threading;
     using Threading.Tasks;
     using Xunit;
 
-    public class HttpClientPostExtensionsTest : IDisposable
+    public class HttpClientPostExtensionsTest
     {
         private readonly HttpClient _client;
-        private readonly HttpServer _server;
-        private readonly string _uri;
+        private readonly string _uri = "http://localhost/";
         private readonly MessagePackSerializerOptions _options;
 
         public HttpClientPostExtensionsTest()
         {
-            _client = new HttpClient();
-            _server = new HttpServer();
-            _uri = _server.Start();
+            _client = new HttpClient(FakeHttpMessageHandler.Instance);
             _options = MessagePackSerializerOptions.Standard;
-        }
-
-        public void Dispose()
-        {
-            _server.Dispose();
         }
 
         [Fact]
@@ -88,5 +79,5 @@
             var formatter = Assert.IsType<MessagePackMediaTypeFormatter>(content.Formatter);
             Assert.Same(_options, formatter.Options);
         }
-        }
+    }
 }

@@ -2,29 +2,20 @@
 {
     using Formatting;
     using MessagePack;
-    using Server;
     using Threading;
     using Threading.Tasks;
     using Xunit;
 
-    public class HttpClientPutExtensionsTest : IDisposable
+    public class HttpClientPutExtensionsTest
     {
         private readonly HttpClient _client;
-        private readonly HttpServer _server;
-        private readonly string _uri;
+        private readonly string _uri = "http://localhost/";
         private readonly MessagePackSerializerOptions _options;
 
         public HttpClientPutExtensionsTest()
         {
             _options = MessagePackSerializerOptions.Standard;
-            _client = new HttpClient();
-            _server = new HttpServer();
-            _uri = _server.Start();
-        }
-
-        public void Dispose()
-        {
-            _server.Dispose();
+            _client = new HttpClient(FakeHttpMessageHandler.Instance);
         }
 
         [Fact]
