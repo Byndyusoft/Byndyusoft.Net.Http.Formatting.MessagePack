@@ -1,6 +1,7 @@
-﻿namespace System.Net.Http.Formatting
+﻿namespace System.Net.Http.Unit.Formatting
 {
     using Collections.Generic;
+    using Http.Formatting;
     using IO;
     using Linq;
     using MessagePack;

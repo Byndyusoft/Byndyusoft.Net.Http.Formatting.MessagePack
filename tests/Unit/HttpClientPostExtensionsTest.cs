@@ -1,6 +1,6 @@
-﻿namespace System.Net.Http
+﻿namespace System.Net.Http.Unit
 {
-    using Formatting;
+    using Http.Formatting;
     using MessagePack;
     using Threading;
     using Threading.Tasks;
@@ -14,7 +14,7 @@
 
         public HttpClientPostExtensionsTest()
         {
-            _client = new HttpClient(FakeHttpMessageHandler.Instance);
+            _client = new HttpClient(new FakeHttpMessageHandler());
             _options = MessagePackSerializerOptions.Standard;
         }
 
@@ -79,5 +79,7 @@
             var formatter = Assert.IsType<MessagePackMediaTypeFormatter>(content.Formatter);
             Assert.Same(_options, formatter.Options);
         }
+
+        
     }
 }

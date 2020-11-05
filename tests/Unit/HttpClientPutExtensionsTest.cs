@@ -1,6 +1,6 @@
-﻿namespace System.Net.Http
+﻿namespace System.Net.Http.Unit
 {
-    using Formatting;
+    using Http.Formatting;
     using MessagePack;
     using Threading;
     using Threading.Tasks;
