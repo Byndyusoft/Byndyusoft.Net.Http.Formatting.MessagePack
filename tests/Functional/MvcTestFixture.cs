@@ -8,6 +8,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
+    using Microsoft.Extensions.Logging;
     using Net;
     using Sockets;
 
@@ -41,6 +42,7 @@
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddLogging(c => c.ClearProviders());
             services.AddControllers();
             services.AddMvcCore(ConfigureMvc);
         }
