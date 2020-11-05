@@ -1,5 +1,4 @@
-﻿
-namespace Byndyusoft.Net.Http.Formatting.MessagePack.Example.Models
+﻿namespace Byndyusoft.Net.Http.Formatting.MessagePack.Example.Models
 {
     using System;
     using global::MessagePack;
