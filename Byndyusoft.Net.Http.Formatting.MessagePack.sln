@@ -22,6 +22,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "github", "github", "{E30C48D7-0561-4A05-AC19-83DCB9BF0C93}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{F57F6CF3-9E8C-4CD1-94DC-44A632A4D98D}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\pull-request.yml = .github\workflows\pull-request.yml
+		.github\workflows\push.yml = .github\workflows\push.yml
+		.github\workflows\release.yml = .github\workflows\release.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,6 +57,7 @@ Global
 		{D8B1DF2E-35FC-4B69-9DE2-FB151CE4CEE3} = {7764A90F-AACD-442D-B684-5DEDCEB04E67}
 		{3B33DC7C-0D9E-4773-AAE6-039E00ACA8AB} = {AEE5C080-DABE-4943-89C3-046A3B8F250D}
 		{F288A021-D195-4CDD-BF3C-C7C1B245EBE0} = {5E9C8B81-3FC5-401F-B6CC-64BD335F3BD7}
+		{F57F6CF3-9E8C-4CD1-94DC-44A632A4D98D} = {E30C48D7-0561-4A05-AC19-83DCB9BF0C93}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AE820C9E-5D1E-4CAE-86AB-C339BAEE0740}
