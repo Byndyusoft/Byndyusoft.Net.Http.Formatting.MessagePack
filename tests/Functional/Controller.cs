@@ -1,8 +1,8 @@
-﻿namespace System.Net.Http.Functional
-{
-    using Microsoft.AspNetCore.Mvc;
-    using Models;
+﻿using System.Net.Http.Tests.Models;
+using Microsoft.AspNetCore.Mvc;
 
+namespace System.Net.Http.Tests.Functional
+{
     [Controller]
     [Route("msgpack-formatter")]
     public class MessagePackFormatterController : ControllerBase

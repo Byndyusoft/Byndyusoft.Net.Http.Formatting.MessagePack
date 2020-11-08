@@ -1,32 +1,21 @@
-﻿namespace System.Net.Http.Unit.Formatting
-{
-    using Collections.Generic;
-    using Http.Formatting;
-    using IO;
-    using Linq;
-    using MessagePack;
-    using Models;
-    using Threading.Tasks;
-    using Xunit;
+﻿using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net.Http.Formatting;
+using System.Net.Http.Tests.Models;
+using System.Threading.Tasks;
+using MessagePack;
+using Xunit;
 
+namespace System.Net.Http.Tests.Unit.Formatting
+{
     public class MessagePackMediaTypeFormatterTest
     {
-        private interface IInterface
-        {
-        }
-
-        private abstract class AbstractClass
-        {
-        }
-
-        private class NonPublicClass
-        {
-        }
+        private readonly HttpContent _content;
+        private readonly TransportContext _context = null;
 
         private readonly MessagePackMediaTypeFormatter _formatter = new MessagePackMediaTypeFormatter();
-        private readonly TransportContext _context = null;
         private readonly IFormatterLogger _logger = null;
-        private readonly HttpContent _content;
 
         public MessagePackMediaTypeFormatterTest()
         {
@@ -176,13 +165,13 @@
         {
             // Arrange
             var input = new SimpleType
-                        {
-                            Property = 10,
-                            Enum = SeekOrigin.Current,
-                            Field = "string",
-                            Array = new[] {1, 2},
-                            Nullable = 100
-                        };
+            {
+                Property = 10,
+                Enum = SeekOrigin.Current,
+                Field = "string",
+                Array = new[] {1, 2},
+                Nullable = 100
+            };
 
             var stream = WriteModel(input);
 
@@ -279,13 +268,13 @@
         {
             // Arrange
             var input = new SimpleType
-                        {
-                            Property = 10,
-                            Enum = SeekOrigin.Current,
-                            Field = "string",
-                            Array = new[] {1, 2},
-                            Nullable = 100
-                        };
+            {
+                Property = 10,
+                Enum = SeekOrigin.Current,
+                Field = "string",
+                Array = new[] {1, 2},
+                Nullable = 100
+            };
 
             var stream = new MemoryStream();
 
@@ -318,7 +307,6 @@
 
         private T ReadModel<T>(Stream stream)
         {
-
             if (stream.Length == 0)
                 return default;
 
@@ -329,13 +317,22 @@
         private Stream WriteModel<T>(T model)
         {
             var stream = new MemoryStream();
-            if (model != null)
-            {
-                MessagePackSerializer.Serialize(stream, model, _formatter.Options);
-            }
+            if (model != null) MessagePackSerializer.Serialize(stream, model, _formatter.Options);
 
             stream.Position = 0;
             return stream;
+        }
+
+        private interface IInterface
+        {
+        }
+
+        private abstract class AbstractClass
+        {
+        }
+
+        private class NonPublicClass
+        {
         }
     }
 }

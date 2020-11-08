@@ -1,15 +1,15 @@
+using System;
+using System.Net.Http;
+using System.Net.Http.Formatting;
+using System.Threading;
+using System.Threading.Tasks;
+using Byndyusoft.Net.Http.Formatting.MessagePack.Example.Models;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json;
+
 namespace Byndyusoft.Net.Http.Formatting.MessagePack.Example
 {
-    using System;
-    using System.Net.Http;
-    using System.Net.Http.Formatting;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using Models;
-    using Microsoft.AspNetCore.Hosting;
-    using Microsoft.Extensions.Hosting;
-    using Newtonsoft.Json;
-
     public static class Program
     {
         public static async Task Main(string[] args)
@@ -21,13 +21,15 @@ namespace Byndyusoft.Net.Http.Formatting.MessagePack.Example
             cts.Cancel();
         }
 
-        private static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
+        private static IHostBuilder CreateHostBuilder(string[] args)
+        {
+            return Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
                     webBuilder.UseUrls("http://localhost:8080");
                 });
+        }
 
         private static async Task MakeCallsAsync()
         {
@@ -51,7 +53,7 @@ namespace Byndyusoft.Net.Http.Formatting.MessagePack.Example
                 new MessagePackMediaTypeFormatter()
             });
 
-            Console.WriteLine($"Received {JsonConvert.SerializeObject(data, Formatting.Indented)}");
+            Console.WriteLine($"Received {JsonConvert.SerializeObject(data, Newtonsoft.Json.Formatting.Indented)}");
         }
     }
 }

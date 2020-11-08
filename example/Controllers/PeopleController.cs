@@ -1,11 +1,11 @@
-﻿namespace Byndyusoft.Net.Http.Formatting.MessagePack.Example.Controllers
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using Models;
-    using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Byndyusoft.Net.Http.Formatting.MessagePack.Example.Models;
+using Microsoft.AspNetCore.Mvc;
 
+namespace Byndyusoft.Net.Http.Formatting.MessagePack.Example.Controllers
+{
     [ApiController]
     [Route("peoples")]
     public class PeopleController : ControllerBase
@@ -23,7 +23,7 @@
         public void Post([FromBody] People people)
         {
             if (people == null) throw new ArgumentNullException(nameof(people));
-            
+
             Peoples.Add(people);
         }
     }

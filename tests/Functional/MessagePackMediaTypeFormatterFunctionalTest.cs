@@ -1,18 +1,18 @@
-﻿namespace System.Net.Http.Functional
-{
-    using Formatting;
-    using IO;
-    using MessagePack;
-    using MessagePack.AspNetCoreMvcFormatter;
-    using Microsoft.AspNetCore.Mvc;
-    using Models;
-    using Threading.Tasks;
-    using Xunit;
+﻿using System.IO;
+using System.Net.Http.Formatting;
+using System.Net.Http.Tests.Models;
+using System.Threading.Tasks;
+using MessagePack;
+using MessagePack.AspNetCoreMvcFormatter;
+using Microsoft.AspNetCore.Mvc;
+using Xunit;
 
+namespace System.Net.Http.Tests.Functional
+{
     public class MessagePackMediaTypeFormatterFunctionalTest : MvcTestFixture
     {
-        private readonly MessagePackSerializerOptions _options;
         private readonly MessagePackMediaTypeFormatter _formatter;
+        private readonly MessagePackSerializerOptions _options;
 
         public MessagePackMediaTypeFormatterFunctionalTest()
         {
@@ -31,13 +31,13 @@
         {
             // Arrange
             var input = new SimpleType
-                        {
-                            Property = 10,
-                            Enum = SeekOrigin.Current,
-                            Field = "string",
-                            Array = new[] {1, 2},
-                            Nullable = 100
-                        };
+            {
+                Property = 10,
+                Enum = SeekOrigin.Current,
+                Field = "string",
+                Array = new[] {1, 2},
+                Nullable = 100
+            };
 
             // Act
             var response = await Client.PostAsMessagePackAsync("/msgpack-formatter", input, _options);
@@ -60,18 +60,18 @@
         {
             // Arrange
             var input = new SimpleType
-                        {
-                            Property = 10,
-                            Enum = SeekOrigin.Current,
-                            Field = "string",
-                            Array = new[] { 1, 2 },
-                            Nullable = 100
-                        };
+            {
+                Property = 10,
+                Enum = SeekOrigin.Current,
+                Field = "string",
+                Array = new[] {1, 2},
+                Nullable = 100
+            };
 
             // Act
             var response = await Client.PutAsMessagePackAsync("/msgpack-formatter", input, _options);
             response.EnsureSuccessStatusCode();
-            var result = await response.Content.ReadAsAsync<SimpleType>(new[] { _formatter });
+            var result = await response.Content.ReadAsAsync<SimpleType>(new[] {_formatter});
 
             // Assert
             Assert.NotNull(result);

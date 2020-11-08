@@ -1,33 +1,27 @@
-﻿namespace System.Net.Http.Formatting
+﻿using System.IO;
+using System.Net.Http.Headers;
+using System.Threading;
+using System.Threading.Tasks;
+using MessagePack;
+
+namespace System.Net.Http.Formatting
 {
-    using System;
-    using Http;
-    using IO;
-    using Net;
-    using MessagePack;
-    using Threading;
-    using Threading.Tasks;
-    using Headers;
-
-
     /// <summary>
-    /// <see cref="MediaTypeFormatter"/> class to handle MessagePack.
+    ///     <see cref="MediaTypeFormatter" /> class to handle MessagePack.
     /// </summary>
     public class MessagePackMediaTypeFormatter : MediaTypeFormatter
     {
-        public static MediaTypeWithQualityHeaderValue DefaultMediaType => MessagePackMediaTypeHeaderValues.ApplicationXMessagePack;
-
         /// <summary>
-        /// Initializes a new instance of the <see cref="MessagePackMediaTypeFormatter"/> class.
+        ///     Initializes a new instance of the <see cref="MessagePackMediaTypeFormatter" /> class.
         /// </summary>
         public MessagePackMediaTypeFormatter() : this(MessagePackSerializer.DefaultOptions)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MessagePackMediaTypeFormatter"/> class.
+        ///     Initializes a new instance of the <see cref="MessagePackMediaTypeFormatter" /> class.
         /// </summary>
-        /// <param name="formatter">The <see cref="MessagePackMediaTypeFormatter"/> instance to copy settings from.</param>
+        /// <param name="formatter">The <see cref="MessagePackMediaTypeFormatter" /> instance to copy settings from.</param>
         protected internal MessagePackMediaTypeFormatter(MessagePackMediaTypeFormatter formatter)
             : base(formatter)
         {
@@ -35,7 +29,7 @@
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MessagePackMediaTypeFormatter"/> class.
+        ///     Initializes a new instance of the <see cref="MessagePackMediaTypeFormatter" /> class.
         /// </summary>
         /// <param name="options">Options for running serialization.</param>
         public MessagePackMediaTypeFormatter(MessagePackSerializerOptions options)
@@ -45,58 +39,67 @@
             SupportedMediaTypes.Add(MessagePackMediaTypeHeaderValues.ApplicationMessagePack);
         }
 
+        public static MediaTypeWithQualityHeaderValue DefaultMediaType =>
+            MessagePackMediaTypeHeaderValues.ApplicationXMessagePack;
+
         /// <summary>
-        /// Options for running the serialization.
+        ///     Options for running the serialization.
         /// </summary>
         public MessagePackSerializerOptions Options { get; }
 
         /// <inheritdoc />
-        public override async Task<object> ReadFromStreamAsync(Type type, Stream readStream, HttpContent content, IFormatterLogger formatterLogger,
+        public override async Task<object> ReadFromStreamAsync(Type type, Stream readStream, HttpContent content,
+            IFormatterLogger formatterLogger,
             CancellationToken cancellationToken)
         {
             if (type is null) throw new ArgumentNullException(nameof(type));
             if (readStream is null) throw new ArgumentNullException(nameof(readStream));
 
-            if (readStream.Length == 0)
-            {
-                return null;
-            }
+            if (readStream.Length == 0) return null;
 
-            return await MessagePackSerializer.DeserializeAsync(type, readStream, Options, cancellationToken).ConfigureAwait(false);
+            return await MessagePackSerializer.DeserializeAsync(type, readStream, Options, cancellationToken)
+                .ConfigureAwait(false);
         }
 
         /// <inheritdoc />
-        public override async Task<object> ReadFromStreamAsync(Type type, Stream readStream, HttpContent content, IFormatterLogger formatterLogger)
+        public override async Task<object> ReadFromStreamAsync(Type type, Stream readStream, HttpContent content,
+            IFormatterLogger formatterLogger)
         {
             return await ReadFromStreamAsync(type, readStream, content, formatterLogger, CancellationToken.None);
         }
 
         /// <inheritdoc />
-        public override async Task WriteToStreamAsync(Type type, object value, Stream writeStream, HttpContent content, TransportContext transportContext,
+        public override async Task WriteToStreamAsync(Type type, object value, Stream writeStream, HttpContent content,
+            TransportContext transportContext,
             CancellationToken cancellationToken)
         {
             if (type is null) throw new ArgumentNullException(nameof(type));
             if (writeStream is null) throw new ArgumentNullException(nameof(writeStream));
 
-            if (value is null)
-            {
-                return;
-            }
+            if (value is null) return;
 
-            await MessagePackSerializer.SerializeAsync(type, writeStream, value, Options, cancellationToken).ConfigureAwait(false);
+            await MessagePackSerializer.SerializeAsync(type, writeStream, value, Options, cancellationToken)
+                .ConfigureAwait(false);
         }
 
         /// <inheritdoc />
-        public override async Task WriteToStreamAsync(Type type, object value, Stream writeStream, HttpContent content, TransportContext transportContext)
+        public override async Task WriteToStreamAsync(Type type, object value, Stream writeStream, HttpContent content,
+            TransportContext transportContext)
         {
             await WriteToStreamAsync(type, value, writeStream, content, transportContext, CancellationToken.None);
         }
 
         /// <inheritdoc />
-        public override bool CanReadType(Type type) => CanSerialize(type);
+        public override bool CanReadType(Type type)
+        {
+            return CanSerialize(type);
+        }
 
         /// <inheritdoc />
-        public override bool CanWriteType(Type type) => CanSerialize(type);
+        public override bool CanWriteType(Type type)
+        {
+            return CanSerialize(type);
+        }
 
         private bool CanSerialize(Type type)
         {
