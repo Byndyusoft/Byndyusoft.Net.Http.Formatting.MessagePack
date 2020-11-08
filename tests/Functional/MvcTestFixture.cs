@@ -1,5 +1,4 @@
-﻿using System.Net.Http.Formatting;
-using System.Net.Http.Headers;
+﻿using System.Net.Http.Formatting.MessagePack;
 using System.Net.Sockets;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -28,8 +27,7 @@ namespace System.Net.Http.Tests.Functional
                     .Build();
             _host.Start();
             Client = new HttpClient {BaseAddress = new Uri(url)};
-            Client.DefaultRequestHeaders.Accept.Add(
-                new MediaTypeWithQualityHeaderValue(MessagePackMediaTypes.ApplicationXMessagePack));
+            Client.DefaultRequestHeaders.Accept.Add(MessagePackConstants.DefaultMediaTypeHeader);
         }
 
         protected HttpClient Client { get; private set; }

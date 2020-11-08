@@ -1,6 +1,7 @@
 using System;
 using System.Net.Http;
 using System.Net.Http.Formatting;
+using System.Net.Http.Formatting.MessagePack;
 using System.Threading;
 using System.Threading.Tasks;
 using Byndyusoft.Net.Http.Formatting.MessagePack.Example.Models;
@@ -41,7 +42,7 @@ namespace Byndyusoft.Net.Http.Formatting.MessagePack.Example
             };
 
             var httpClient = new HttpClient();
-            httpClient.DefaultRequestHeaders.Accept.Add(MessagePackMediaTypeFormatter.DefaultMediaType);
+            httpClient.DefaultRequestHeaders.Accept.Add(MessagePackConstants.DefaultMediaTypeHeader);
 
             var post = await httpClient.PostAsMessagePackAsync("http://localhost:8080/peoples", people);
             post.EnsureSuccessStatusCode();

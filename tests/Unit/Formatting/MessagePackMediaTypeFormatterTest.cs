@@ -23,14 +23,6 @@ namespace System.Net.Http.Tests.Unit.Formatting
         }
 
         [Fact]
-        public void DefaultMediaType_ReturnsApplicationXMsgPack()
-        {
-            var mediaType = MessagePackMediaTypeFormatter.DefaultMediaType;
-            Assert.NotNull(mediaType);
-            Assert.Equal("application/x-msgpack", mediaType.MediaType);
-        }
-
-        [Fact]
         public void DefaultConstructor()
         {
             // Act
@@ -66,7 +58,6 @@ namespace System.Net.Http.Tests.Unit.Formatting
         [Theory]
         [InlineData(typeof(IInterface), false)]
         [InlineData(typeof(AbstractClass), false)]
-        [InlineData(typeof(NonPublicClass), false)]
         [InlineData(typeof(Dictionary<string, object>), true)]
         [InlineData(typeof(string), true)]
         [InlineData(typeof(SimpleType), true)]
@@ -83,7 +74,6 @@ namespace System.Net.Http.Tests.Unit.Formatting
         [Theory]
         [InlineData(typeof(IInterface), false)]
         [InlineData(typeof(AbstractClass), false)]
-        [InlineData(typeof(NonPublicClass), false)]
         [InlineData(typeof(Dictionary<string, object>), true)]
         [InlineData(typeof(string), true)]
         [InlineData(typeof(SimpleType), true)]
@@ -328,10 +318,6 @@ namespace System.Net.Http.Tests.Unit.Formatting
         }
 
         private abstract class AbstractClass
-        {
-        }
-
-        private class NonPublicClass
         {
         }
     }

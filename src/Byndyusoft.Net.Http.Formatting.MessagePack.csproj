@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\icon.jpg" Pack="true" PackagePath="icon.jpg"/>
+    <None Include="..\icon.jpg" Pack="true" PackagePath="icon.jpg" />
   </ItemGroup>
 
 </Project>

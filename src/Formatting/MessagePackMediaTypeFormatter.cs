@@ -1,5 +1,5 @@
 ﻿using System.IO;
-using System.Net.Http.Headers;
+using System.Net.Http.Formatting.MessagePack;
 using System.Threading;
 using System.Threading.Tasks;
 using MessagePack;
@@ -14,7 +14,7 @@ namespace System.Net.Http.Formatting
         /// <summary>
         ///     Initializes a new instance of the <see cref="MessagePackMediaTypeFormatter" /> class.
         /// </summary>
-        public MessagePackMediaTypeFormatter() : this(MessagePackSerializer.DefaultOptions)
+        public MessagePackMediaTypeFormatter() : this(MessagePackConstants.DefaultSerializerOptions)
         {
         }
 
@@ -35,12 +35,9 @@ namespace System.Net.Http.Formatting
         public MessagePackMediaTypeFormatter(MessagePackSerializerOptions options)
         {
             Options = options ?? throw new ArgumentNullException(nameof(options));
-            SupportedMediaTypes.Add(MessagePackMediaTypeHeaderValues.ApplicationXMessagePack);
-            SupportedMediaTypes.Add(MessagePackMediaTypeHeaderValues.ApplicationMessagePack);
+            SupportedMediaTypes.Add(MessagePackConstants.MediaTypeHeaders.ApplicationXMessagePack);
+            SupportedMediaTypes.Add(MessagePackConstants.MediaTypeHeaders.ApplicationMessagePack);
         }
-
-        public static MediaTypeWithQualityHeaderValue DefaultMediaType =>
-            MessagePackMediaTypeHeaderValues.ApplicationXMessagePack;
 
         /// <summary>
         ///     Options for running the serialization.
@@ -103,7 +100,7 @@ namespace System.Net.Http.Formatting
 
         private bool CanSerialize(Type type)
         {
-            return !type.IsAbstract && !type.IsInterface && type.IsPublic;
+            return !type.IsAbstract && !type.IsInterface;
         }
     }
 }
