@@ -14,8 +14,7 @@ namespace System.Net.Http
     {
         /// <summary>
         ///     Sends a Put request as an asynchronous operation to the specified Uri with the given <paramref name="value" />
-        ///     serialized
-        ///     as MessagePack.
+        ///     serialized as MessagePack.
         /// </summary>
         /// <remarks>
         ///     This method uses a default instance of <see cref="MessagePackMediaTypeFormatter" />.
@@ -35,8 +34,7 @@ namespace System.Net.Http
 
         /// <summary>
         ///     Sends a PUT request as an asynchronous operation to the specified Uri with the given <paramref name="value" />
-        ///     serialized
-        ///     as MessagePack.
+        ///     serialized as MessagePack.
         /// </summary>
         /// <remarks>
         ///     This method uses a default instance of <see cref="MessagePackMediaTypeFormatter" />.
@@ -58,8 +56,7 @@ namespace System.Net.Http
 
         /// <summary>
         ///     Sends a PUT request as an asynchronous operation to the specified Uri with the given <paramref name="value" />
-        ///     serialized
-        ///     as MessagePack.
+        ///     serialized as MessagePack.
         /// </summary>
         /// <remarks>
         ///     This method uses a default instance of <see cref="MessagePackMediaTypeFormatter" />.
@@ -82,8 +79,7 @@ namespace System.Net.Http
 
         /// <summary>
         ///     Sends a PUT request as an asynchronous operation to the specified Uri with the given <paramref name="value" />
-        ///     serialized
-        ///     as MessagePack.
+        ///     serialized as MessagePack.
         /// </summary>
         /// <remarks>
         ///     This method uses a default instance of <see cref="MessagePackMediaTypeFormatter" />.
@@ -109,8 +105,7 @@ namespace System.Net.Http
 
         /// <summary>
         ///     Sends a PUT request as an asynchronous operation to the specified Uri with the given <paramref name="value" />
-        ///     serialized
-        ///     as MessagePack.
+        ///     serialized as MessagePack.
         /// </summary>
         /// <remarks>
         ///     This method uses a default instance of <see cref="MessagePackMediaTypeFormatter" />.
@@ -130,8 +125,7 @@ namespace System.Net.Http
 
         /// <summary>
         ///     Sends a PUT request as an asynchronous operation to the specified Uri with the given <paramref name="value" />
-        ///     serialized
-        ///     as MessagePack.
+        ///     serialized as MessagePack.
         /// </summary>
         /// <remarks>
         ///     This method uses a default instance of <see cref="MessagePackMediaTypeFormatter" />.
@@ -153,8 +147,7 @@ namespace System.Net.Http
 
         /// <summary>
         ///     Sends a PUT request as an asynchronous operation to the specified Uri with the given <paramref name="value" />
-        ///     serialized
-        ///     as MessagePack.
+        ///     serializeds as MessagePack.
         /// </summary>
         /// <remarks>
         ///     This method uses a default instance of <see cref="MessagePackMediaTypeFormatter" />.
@@ -177,8 +170,7 @@ namespace System.Net.Http
 
         /// <summary>
         ///     Sends a PUT request as an asynchronous operation to the specified Uri with the given <paramref name="value" />
-        ///     serialized
-        ///     as MessagePack.
+        ///     serialized as MessagePack.
         /// </summary>
         /// <remarks>
         ///     This method uses a default instance of <see cref="MessagePackMediaTypeFormatter" />.

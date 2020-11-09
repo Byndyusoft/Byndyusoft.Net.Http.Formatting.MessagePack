@@ -11,8 +11,8 @@ namespace System.Net.Http.Tests.Functional
     public abstract class MvcTestFixture : IDisposable
     {
         private readonly string _url;
-        private IHost _host;
         private HttpClient _client;
+        private IHost _host;
 
         protected MvcTestFixture()
         {
@@ -35,7 +35,7 @@ namespace System.Net.Http.Tests.Functional
             {
                 if (_client == null)
                 {
-                    _client = new HttpClient { BaseAddress = new Uri(_url) };
+                    _client = new HttpClient {BaseAddress = new Uri(_url)};
                     ConfigureHttpClient(_client);
                 }
 
