@@ -1,0 +1,65 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30611.23
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "example", "example", "{5E9C8B81-3FC5-401F-B6CC-64BD335F3BD7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Byndyusoft.Net.Http.Formatting.MessagePack.Example", "example\Byndyusoft.Net.Http.Formatting.MessagePack.Example.csproj", "{F288A021-D195-4CDD-BF3C-C7C1B245EBE0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{7764A90F-AACD-442D-B684-5DEDCEB04E67}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{AEE5C080-DABE-4943-89C3-046A3B8F250D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Byndyusoft.Net.Http.Formatting.MessagePack", "src\Byndyusoft.Net.Http.Formatting.MessagePack.csproj", "{D8B1DF2E-35FC-4B69-9DE2-FB151CE4CEE3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Byndyusoft.Net.Http.Formatting.MessagePack.Tests", "tests\Byndyusoft.Net.Http.Formatting.MessagePack.Tests.csproj", "{3B33DC7C-0D9E-4773-AAE6-039E00ACA8AB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D988C0DD-9CD1-49FD-98FB-D835CEAC3BD4}"
+	ProjectSection(SolutionItems) = preProject
+		CONTRIBUTING.md = CONTRIBUTING.md
+		LICENSE.txt = LICENSE.txt
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "github", "github", "{E30C48D7-0561-4A05-AC19-83DCB9BF0C93}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{F57F6CF3-9E8C-4CD1-94DC-44A632A4D98D}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\pull-request.yml = .github\workflows\pull-request.yml
+		.github\workflows\push.yml = .github\workflows\push.yml
+		.github\workflows\release.yml = .github\workflows\release.yml
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D8B1DF2E-35FC-4B69-9DE2-FB151CE4CEE3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8B1DF2E-35FC-4B69-9DE2-FB151CE4CEE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8B1DF2E-35FC-4B69-9DE2-FB151CE4CEE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8B1DF2E-35FC-4B69-9DE2-FB151CE4CEE3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B33DC7C-0D9E-4773-AAE6-039E00ACA8AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B33DC7C-0D9E-4773-AAE6-039E00ACA8AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B33DC7C-0D9E-4773-AAE6-039E00ACA8AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B33DC7C-0D9E-4773-AAE6-039E00ACA8AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F288A021-D195-4CDD-BF3C-C7C1B245EBE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F288A021-D195-4CDD-BF3C-C7C1B245EBE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F288A021-D195-4CDD-BF3C-C7C1B245EBE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F288A021-D195-4CDD-BF3C-C7C1B245EBE0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D8B1DF2E-35FC-4B69-9DE2-FB151CE4CEE3} = {7764A90F-AACD-442D-B684-5DEDCEB04E67}
+		{3B33DC7C-0D9E-4773-AAE6-039E00ACA8AB} = {AEE5C080-DABE-4943-89C3-046A3B8F250D}
+		{F288A021-D195-4CDD-BF3C-C7C1B245EBE0} = {5E9C8B81-3FC5-401F-B6CC-64BD335F3BD7}
+		{F57F6CF3-9E8C-4CD1-94DC-44A632A4D98D} = {E30C48D7-0561-4A05-AC19-83DCB9BF0C93}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AE820C9E-5D1E-4CAE-86AB-C339BAEE0740}
+	EndGlobalSection
+EndGlobal
