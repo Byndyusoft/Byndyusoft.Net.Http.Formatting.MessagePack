@@ -137,7 +137,7 @@ namespace System.Net.Http.Tests.Unit.Formatting
         }
 
         [Fact]
-        public async Task ReadFromStreamAsync_ReadsBasicType()
+        public async Task ReadFromStreamAsync_ReadsPrimitiveType()
         {
             // Arrange
             var expectedInt = 10;
@@ -213,7 +213,7 @@ namespace System.Net.Http.Tests.Unit.Formatting
         }
 
         [Fact]
-        public async Task WriteToStreamAsync__WhenStreamIsNull_ThrowsException()
+        public async Task WriteToStreamAsync_WhenStreamIsNull_ThrowsException()
         {
             // Act
             var exception =

@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Net.Http.Formatting;
+using System.Net.Http.Formatting.MessagePack;
 using System.Net.Http.Tests.Models;
 using System.Threading.Tasks;
 using MessagePack;
@@ -24,6 +25,11 @@ namespace System.Net.Http.Tests.Functional
         {
             options.OutputFormatters.Add(new MessagePackOutputFormatter(_options));
             options.InputFormatters.Add(new MessagePackInputFormatter(_options));
+        }
+
+        protected override void ConfigureHttpClient(HttpClient client)
+        {
+            client.DefaultRequestHeaders.Accept.Add(MessagePackConstants.DefaultMediaTypeHeader);
         }
 
         [Fact]

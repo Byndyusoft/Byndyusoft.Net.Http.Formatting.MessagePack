@@ -46,15 +46,20 @@ namespace System.Net.Http.Formatting
 
         /// <inheritdoc />
         public override async Task<object> ReadFromStreamAsync(Type type, Stream readStream, HttpContent content,
-            IFormatterLogger formatterLogger,
-            CancellationToken cancellationToken)
+            IFormatterLogger formatterLogger, CancellationToken cancellationToken)
         {
             if (type is null) throw new ArgumentNullException(nameof(type));
             if (readStream is null) throw new ArgumentNullException(nameof(readStream));
 
             if (readStream.Length == 0) return null;
 
-            return await MessagePackSerializer.DeserializeAsync(type, readStream, Options, cancellationToken)
+            var memoryStrem = new MemoryStream();
+            await readStream.CopyToAsync(memoryStrem).ConfigureAwait(false);
+
+            if (memoryStrem.Length == 0) return null;
+
+            memoryStrem.Position = 0;
+            return await MessagePackSerializer.DeserializeAsync(type, memoryStrem, Options, cancellationToken)
                 .ConfigureAwait(false);
         }
 

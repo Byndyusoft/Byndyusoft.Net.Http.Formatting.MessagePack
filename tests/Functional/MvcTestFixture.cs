@@ -1,5 +1,4 @@
-﻿using System.Net.Http.Formatting.MessagePack;
-using System.Net.Sockets;
+﻿using System.Net.Sockets;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -11,34 +10,46 @@ namespace System.Net.Http.Tests.Functional
 {
     public abstract class MvcTestFixture : IDisposable
     {
+        private readonly string _url;
         private IHost _host;
+        private HttpClient _client;
 
         protected MvcTestFixture()
         {
-            var url = $"http://localhost:{FreeTcpPort()}";
+            _url = $"http://localhost:{FreeTcpPort()}";
             _host =
                 Host.CreateDefaultBuilder()
                     .ConfigureWebHostDefaults(webBuilder =>
                     {
-                        webBuilder.UseUrls(url);
+                        webBuilder.UseUrls(_url);
                         webBuilder.ConfigureServices(ConfigureServices);
                         webBuilder.Configure(Configure);
                     })
                     .Build();
             _host.Start();
-            Client = new HttpClient {BaseAddress = new Uri(url)};
-            Client.DefaultRequestHeaders.Accept.Add(MessagePackConstants.DefaultMediaTypeHeader);
         }
 
-        protected HttpClient Client { get; private set; }
+        protected HttpClient Client
+        {
+            get
+            {
+                if (_client == null)
+                {
+                    _client = new HttpClient { BaseAddress = new Uri(_url) };
+                    ConfigureHttpClient(_client);
+                }
+
+                return _client;
+            }
+        }
 
         public virtual void Dispose()
         {
             _host?.Dispose();
             _host = null;
 
-            Client?.Dispose();
-            Client = null;
+            _client?.Dispose();
+            _client = null;
         }
 
         public void Configure(IApplicationBuilder app)
@@ -55,6 +66,10 @@ namespace System.Net.Http.Tests.Functional
         }
 
         protected abstract void ConfigureMvc(MvcOptions options);
+
+        protected virtual void ConfigureHttpClient(HttpClient client)
+        {
+        }
 
         private static int FreeTcpPort()
         {
