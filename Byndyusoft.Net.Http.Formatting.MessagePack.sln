@@ -18,6 +18,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D988C0DD-9CD1-49FD-98FB-D835CEAC3BD4}"
 	ProjectSection(SolutionItems) = preProject
 		CONTRIBUTING.md = CONTRIBUTING.md
+		icon.png = icon.png
 		LICENSE.txt = LICENSE.txt
 		README.md = README.md
 	EndProjectSection
@@ -37,6 +38,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F288A021-D195-4CDD-BF3C-C7C1B245EBE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F288A021-D195-4CDD-BF3C-C7C1B245EBE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F288A021-D195-4CDD-BF3C-C7C1B245EBE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F288A021-D195-4CDD-BF3C-C7C1B245EBE0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D8B1DF2E-35FC-4B69-9DE2-FB151CE4CEE3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D8B1DF2E-35FC-4B69-9DE2-FB151CE4CEE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D8B1DF2E-35FC-4B69-9DE2-FB151CE4CEE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -45,18 +50,14 @@ Global
 		{3B33DC7C-0D9E-4773-AAE6-039E00ACA8AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3B33DC7C-0D9E-4773-AAE6-039E00ACA8AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3B33DC7C-0D9E-4773-AAE6-039E00ACA8AB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F288A021-D195-4CDD-BF3C-C7C1B245EBE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F288A021-D195-4CDD-BF3C-C7C1B245EBE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F288A021-D195-4CDD-BF3C-C7C1B245EBE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F288A021-D195-4CDD-BF3C-C7C1B245EBE0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{F288A021-D195-4CDD-BF3C-C7C1B245EBE0} = {5E9C8B81-3FC5-401F-B6CC-64BD335F3BD7}
 		{D8B1DF2E-35FC-4B69-9DE2-FB151CE4CEE3} = {7764A90F-AACD-442D-B684-5DEDCEB04E67}
 		{3B33DC7C-0D9E-4773-AAE6-039E00ACA8AB} = {AEE5C080-DABE-4943-89C3-046A3B8F250D}
-		{F288A021-D195-4CDD-BF3C-C7C1B245EBE0} = {5E9C8B81-3FC5-401F-B6CC-64BD335F3BD7}
 		{F57F6CF3-9E8C-4CD1-94DC-44A632A4D98D} = {E30C48D7-0561-4A05-AC19-83DCB9BF0C93}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
