@@ -1,12 +1,11 @@
 ﻿using System.Net.Sockets;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace System.Net.Http.Tests.Functional
+namespace System.Net.Http.Formatting.Functional
 {
     public abstract class MvcTestFixture : IDisposable
     {
@@ -62,10 +61,10 @@ namespace System.Net.Http.Tests.Functional
         {
             services.AddLogging(c => c.ClearProviders());
             services.AddControllers();
-            services.AddMvcCore(ConfigureMvc);
+            ConfigureMvc(services.AddMvcCore());
         }
 
-        protected abstract void ConfigureMvc(MvcOptions options);
+        protected abstract void ConfigureMvc(IMvcCoreBuilder builder);
 
         protected virtual void ConfigureHttpClient(HttpClient client)
         {

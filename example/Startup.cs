@@ -1,4 +1,4 @@
-using System.Net.Http.Formatting.MessagePack;
+using System.Net.Http.MessagePack;
 using MessagePack.AspNetCoreMvcFormatter;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -18,9 +18,9 @@ namespace Byndyusoft.Net.Http.Formatting.MessagePack.Example
                 {
                     options.EnableEndpointRouting = true;
                     options.OutputFormatters.Add(
-                        new MessagePackOutputFormatter(MessagePackConstants.DefaultSerializerOptions));
+                        new MessagePackOutputFormatter(MessagePackDefaults.SerializerOptions));
                     options.InputFormatters.Add(
-                        new MessagePackInputFormatter(MessagePackConstants.DefaultSerializerOptions));
+                        new MessagePackInputFormatter(MessagePackDefaults.SerializerOptions));
                 });
         }
 

@@ -1,14 +1,11 @@
-﻿using System.IO;
-using System.Net.Http.Formatting;
-using System.Net.Http.Formatting.MessagePack;
-using System.Net.Http.Tests.Models;
+﻿using System.Net.Http.Formatting.Models;
+using System.Net.Http.MessagePack;
 using System.Threading.Tasks;
 using MessagePack;
-using MessagePack.AspNetCoreMvcFormatter;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
-namespace System.Net.Http.Tests.Functional
+namespace System.Net.Http.Formatting.Functional
 {
     public class MessagePackMediaTypeFormatterFunctionalTest : MvcTestFixture
     {
@@ -21,29 +18,25 @@ namespace System.Net.Http.Tests.Functional
             _formatter = new MessagePackMediaTypeFormatter(_options);
         }
 
-        protected override void ConfigureMvc(MvcOptions options)
+        protected override void ConfigureMvc(IMvcCoreBuilder builder)
         {
-            options.OutputFormatters.Add(new MessagePackOutputFormatter(_options));
-            options.InputFormatters.Add(new MessagePackInputFormatter(_options));
+            builder.AddMessagePackFormatters(
+                options =>
+                {
+                    options.SerializerOptions = _options;
+                });
         }
 
         protected override void ConfigureHttpClient(HttpClient client)
         {
-            client.DefaultRequestHeaders.Accept.Add(MessagePackConstants.DefaultMediaTypeHeader);
+            client.DefaultRequestHeaders.Accept.Add(MessagePackDefaults.MediaTypeHeader);
         }
 
         [Fact]
         public async Task PostAsMessagePackAsync()
         {
             // Arrange
-            var input = new SimpleType
-            {
-                Property = 10,
-                Enum = SeekOrigin.Current,
-                Field = "string",
-                Array = new[] {1, 2},
-                Nullable = 100
-            };
+            var input = SimpleType.Create();
 
             // Act
             var response = await Client.PostAsMessagePackAsync("/msgpack-formatter", input, _options);
@@ -53,26 +46,14 @@ namespace System.Net.Http.Tests.Functional
             // Assert
             Assert.NotNull(result);
             var model = Assert.IsType<SimpleType>(result);
-
-            Assert.Equal(input.Property, model.Property);
-            Assert.Equal(input.Field, model.Field);
-            Assert.Equal(input.Enum, model.Enum);
-            Assert.Equal(input.Array, model.Array);
-            Assert.Equal(input.Nullable, model.Nullable);
+            model.Verify();
         }
 
         [Fact]
         public async Task PutAsMessagePackAsync()
         {
             // Arrange
-            var input = new SimpleType
-            {
-                Property = 10,
-                Enum = SeekOrigin.Current,
-                Field = "string",
-                Array = new[] {1, 2},
-                Nullable = 100
-            };
+            var input = SimpleType.Create();
 
             // Act
             var response = await Client.PutAsMessagePackAsync("/msgpack-formatter", input, _options);
@@ -82,12 +63,7 @@ namespace System.Net.Http.Tests.Functional
             // Assert
             Assert.NotNull(result);
             var model = Assert.IsType<SimpleType>(result);
-
-            Assert.Equal(input.Property, model.Property);
-            Assert.Equal(input.Field, model.Field);
-            Assert.Equal(input.Enum, model.Enum);
-            Assert.Equal(input.Array, model.Array);
-            Assert.Equal(input.Nullable, model.Nullable);
+            model.Verify();
         }
     }
 }

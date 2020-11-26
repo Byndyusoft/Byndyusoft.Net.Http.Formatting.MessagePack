@@ -1,6 +1,6 @@
 using MessagePack;
 
-namespace System.Net.Http.Tests.Models
+namespace System.Net.Http.Formatting.Models
 {
     [MessagePackObject]
     public class ComplexType

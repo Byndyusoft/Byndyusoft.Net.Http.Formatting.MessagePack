@@ -1,13 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net.Http.Formatting;
-using System.Net.Http.Tests.Models;
+using System.Net.Http.Formatting.Models;
 using System.Threading.Tasks;
 using MessagePack;
 using Xunit;
 
-namespace System.Net.Http.Tests.Unit.Formatting
+namespace System.Net.Http.Formatting.Unit
 {
     public class MessagePackMediaTypeFormatterTest
     {
@@ -154,14 +153,7 @@ namespace System.Net.Http.Tests.Unit.Formatting
         public async Task ReadFromStreamAsync_ReadsSimpleTypes()
         {
             // Arrange
-            var input = new SimpleType
-            {
-                Property = 10,
-                Enum = SeekOrigin.Current,
-                Field = "string",
-                Array = new[] {1, 2},
-                Nullable = 100
-            };
+            var input = SimpleType.Create();
 
             var stream = WriteModel(input);
 
@@ -171,12 +163,7 @@ namespace System.Net.Http.Tests.Unit.Formatting
             // Assert
             Assert.NotNull(result);
             var model = Assert.IsType<SimpleType>(result);
-
-            Assert.Equal(input.Property, model.Property);
-            Assert.Equal(input.Field, model.Field);
-            Assert.Equal(input.Enum, model.Enum);
-            Assert.Equal(input.Array, model.Array);
-            Assert.Equal(input.Nullable, model.Nullable);
+            model.Verify();
         }
 
         [Fact]
@@ -257,14 +244,7 @@ namespace System.Net.Http.Tests.Unit.Formatting
         public async Task WriteToStreamAsync_WritesSimplesType()
         {
             // Arrange
-            var input = new SimpleType
-            {
-                Property = 10,
-                Enum = SeekOrigin.Current,
-                Field = "string",
-                Array = new[] {1, 2},
-                Nullable = 100
-            };
+            var input = SimpleType.Create();
 
             var stream = new MemoryStream();
 
@@ -273,11 +253,7 @@ namespace System.Net.Http.Tests.Unit.Formatting
 
             // Assert
             var result = ReadModel<SimpleType>(stream);
-            Assert.Equal(input.Property, result.Property);
-            Assert.Equal(input.Field, result.Field);
-            Assert.Equal(input.Enum, result.Enum);
-            Assert.Equal(input.Array, result.Array);
-            Assert.Equal(input.Nullable, result.Nullable);
+            result.Verify();
         }
 
         [Fact]

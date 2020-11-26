@@ -1,5 +1,5 @@
 ﻿using System.IO;
-using System.Net.Http.Formatting.MessagePack;
+using System.Net.Http.MessagePack;
 using System.Threading;
 using System.Threading.Tasks;
 using MessagePack;
@@ -14,7 +14,7 @@ namespace System.Net.Http.Formatting
         /// <summary>
         ///     Initializes a new instance of the <see cref="MessagePackMediaTypeFormatter" /> class.
         /// </summary>
-        public MessagePackMediaTypeFormatter() : this(MessagePackConstants.DefaultSerializerOptions)
+        public MessagePackMediaTypeFormatter() : this(MessagePackDefaults.SerializerOptions)
         {
         }
 
@@ -35,8 +35,8 @@ namespace System.Net.Http.Formatting
         public MessagePackMediaTypeFormatter(MessagePackSerializerOptions options)
         {
             Options = options ?? throw new ArgumentNullException(nameof(options));
-            SupportedMediaTypes.Add(MessagePackConstants.MediaTypeHeaders.ApplicationXMessagePack);
-            SupportedMediaTypes.Add(MessagePackConstants.MediaTypeHeaders.ApplicationMessagePack);
+            SupportedMediaTypes.Add(MessagePackDefaults.MediaTypeHeaders.ApplicationXMessagePack);
+            SupportedMediaTypes.Add(MessagePackDefaults.MediaTypeHeaders.ApplicationMessagePack);
         }
 
         /// <summary>
@@ -53,14 +53,15 @@ namespace System.Net.Http.Formatting
 
             if (readStream.Length == 0) return null;
 
-            var memoryStrem = new MemoryStream();
-            await readStream.CopyToAsync(memoryStrem).ConfigureAwait(false);
+            using (var memoryStrem = new MemoryStream())
+            {
+                await readStream.CopyToAsync(memoryStrem, 81920, cancellationToken).ConfigureAwait(false);
+                if (memoryStrem.Length == 0) return null;
 
-            if (memoryStrem.Length == 0) return null;
-
-            memoryStrem.Position = 0;
-            return await MessagePackSerializer.DeserializeAsync(type, memoryStrem, Options, cancellationToken)
-                .ConfigureAwait(false);
+                memoryStrem.Position = 0;
+                return await MessagePackSerializer.DeserializeAsync(type, memoryStrem, Options, cancellationToken)
+                    .ConfigureAwait(false);
+            }
         }
 
         /// <inheritdoc />
