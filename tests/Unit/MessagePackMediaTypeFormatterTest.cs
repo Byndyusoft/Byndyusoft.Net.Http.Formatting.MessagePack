@@ -12,13 +12,15 @@ namespace System.Net.Http.Formatting.Unit
     {
         private readonly HttpContent _content;
         private readonly TransportContext _context = null;
-
-        private readonly MessagePackMediaTypeFormatter _formatter = new MessagePackMediaTypeFormatter();
+        private readonly MessagePackMediaTypeFormatter _formatter;
         private readonly IFormatterLogger _logger = null;
+        private readonly MessagePackSerializerOptions _serializerOptions;
 
         public MessagePackMediaTypeFormatterTest()
         {
+            _serializerOptions = MessagePackSerializerOptions.Standard;
             _content = new StreamContent(new MemoryStream());
+            _formatter = new MessagePackMediaTypeFormatter(_serializerOptions);
         }
 
         [Fact]
@@ -28,7 +30,7 @@ namespace System.Net.Http.Formatting.Unit
             var formatter = new MessagePackMediaTypeFormatter();
 
             // Assert
-            Assert.NotNull(formatter.Options);
+            Assert.NotNull(formatter.SerializerOptions);
         }
 
         [Fact]
@@ -38,7 +40,7 @@ namespace System.Net.Http.Formatting.Unit
             var copy = new MessagePackMediaTypeFormatter(_formatter);
 
             // Assert
-            Assert.Same(_formatter.Options, copy.Options);
+            Assert.Same(_serializerOptions, copy.SerializerOptions);
         }
 
         [Fact]
@@ -51,7 +53,7 @@ namespace System.Net.Http.Formatting.Unit
             var formatter = new MessagePackMediaTypeFormatter(options);
 
             // Assert
-            Assert.Same(options, formatter.Options);
+            Assert.Same(options, formatter.SerializerOptions);
         }
 
         [Theory]
@@ -126,10 +128,11 @@ namespace System.Net.Http.Formatting.Unit
         public async Task ReadFromStreamAsync_ReadsNullObject()
         {
             // Assert
-            var stream = WriteModel<object>(null);
+            var content = new StreamMessagePackHttpContent();
+            await content.WriteObjectAsync<SimpleType>(null, _serializerOptions);
 
             // Act
-            var result = await _formatter.ReadFromStreamAsync(typeof(object), stream, _content, _logger);
+            var result = await _formatter.ReadFromStreamAsync(typeof(object), content.Stream, content, _logger);
 
             // Assert
             Assert.Null(result);
@@ -140,10 +143,11 @@ namespace System.Net.Http.Formatting.Unit
         {
             // Arrange
             var expectedInt = 10;
-            var stream = WriteModel(expectedInt);
+            var content = new StreamMessagePackHttpContent();
+            await content.WriteObjectAsync(expectedInt, _serializerOptions);
 
             // Act
-            var result = await _formatter.ReadFromStreamAsync(typeof(int), stream, _content, _logger);
+            var result = await _formatter.ReadFromStreamAsync(typeof(int), content.Stream, content, _logger);
 
             // Assert
             Assert.Equal(expectedInt, result);
@@ -153,12 +157,11 @@ namespace System.Net.Http.Formatting.Unit
         public async Task ReadFromStreamAsync_ReadsSimpleTypes()
         {
             // Arrange
-            var input = SimpleType.Create();
-
-            var stream = WriteModel(input);
+            var content = new StreamMessagePackHttpContent();
+            await content.WriteObjectAsync(SimpleType.Create(), _serializerOptions);
 
             // Act
-            var result = await _formatter.ReadFromStreamAsync(typeof(SimpleType), stream, _content, _logger);
+            var result = await _formatter.ReadFromStreamAsync(typeof(SimpleType), content.Stream, content, _logger);
 
             // Assert
             Assert.NotNull(result);
@@ -171,11 +174,11 @@ namespace System.Net.Http.Formatting.Unit
         {
             // Arrange
             var input = new ComplexType {Inner = new SimpleType {Property = 10}};
-
-            var stream = WriteModel(input);
+            var content = new StreamMessagePackHttpContent();
+            await content.WriteObjectAsync(input, _serializerOptions);
 
             // Act
-            var result = await _formatter.ReadFromStreamAsync(typeof(ComplexType), stream, _content, _logger);
+            var result = await _formatter.ReadFromStreamAsync(typeof(ComplexType), content.Stream, content, _logger);
 
             // Assert
             Assert.NotNull(result);
@@ -215,13 +218,13 @@ namespace System.Net.Http.Formatting.Unit
         public async Task WriteToStreamAsync_WritesNullObject()
         {
             // Assert
-            var stream = new MemoryStream();
+            var content = new StreamMessagePackHttpContent();
 
             // Act
-            await _formatter.WriteToStreamAsync(typeof(object), null, stream, _content, _context);
+            await _formatter.WriteToStreamAsync(typeof(object), null, content.Stream, content, _context);
 
             // Assert
-            var result = ReadModel<object>(stream);
+            var result = await content.ReadObjectAsync<SimpleType>(_serializerOptions);
             Assert.Null(result);
         }
 
@@ -230,13 +233,13 @@ namespace System.Net.Http.Formatting.Unit
         {
             // Arrange
             var expectedInt = 10;
-            var stream = new MemoryStream();
+            var content = new StreamMessagePackHttpContent();
 
             // Act
-            await _formatter.WriteToStreamAsync(typeof(int), expectedInt, stream, _content, _context);
+            await _formatter.WriteToStreamAsync(typeof(int), expectedInt, content.Stream, content, _context);
 
             // Assert
-            var result = ReadModel<int>(stream);
+            var result = await content.ReadObjectAsync<int>(_serializerOptions);
             Assert.Equal(expectedInt, result);
         }
 
@@ -245,14 +248,13 @@ namespace System.Net.Http.Formatting.Unit
         {
             // Arrange
             var input = SimpleType.Create();
-
-            var stream = new MemoryStream();
+            var content = new StreamMessagePackHttpContent();
 
             // Act
-            await _formatter.WriteToStreamAsync(typeof(SimpleType), input, stream, _content, _context);
+            await _formatter.WriteToStreamAsync(typeof(SimpleType), input, content.Stream, content, _context);
 
             // Assert
-            var result = ReadModel<SimpleType>(stream);
+            var result = await content.ReadObjectAsync<SimpleType>(_serializerOptions);
             result.Verify();
         }
 
@@ -260,33 +262,15 @@ namespace System.Net.Http.Formatting.Unit
         public async Task WriteToStreamAsync_WritesComplexType()
         {
             // Arrange
-            var input = new ComplexType {Inner = new SimpleType {Property = 10}};
-            var stream = new MemoryStream();
+            var input = ComplexType.Create();
+            var content = new StreamMessagePackHttpContent();
 
             // Act
-            await _formatter.WriteToStreamAsync(typeof(ComplexType), input, stream, _content, _context);
+            await _formatter.WriteToStreamAsync(typeof(ComplexType), input, content.Stream, content, _context);
 
             // Assert
-            var result = ReadModel<ComplexType>(stream);
-            Assert.Equal(input.Inner.Property, result.Inner.Property);
-        }
-
-        private T ReadModel<T>(Stream stream)
-        {
-            if (stream.Length == 0)
-                return default;
-
-            stream.Position = 0;
-            return MessagePackSerializer.Deserialize<T>(stream, _formatter.Options);
-        }
-
-        private Stream WriteModel<T>(T model)
-        {
-            var stream = new MemoryStream();
-            if (model != null) MessagePackSerializer.Serialize(stream, model, _formatter.Options);
-
-            stream.Position = 0;
-            return stream;
+            var result = await content.ReadObjectAsync<ComplexType>(_serializerOptions);
+            result.Verify();
         }
 
         private interface IInterface

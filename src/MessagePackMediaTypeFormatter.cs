@@ -25,7 +25,7 @@ namespace System.Net.Http.Formatting
         protected internal MessagePackMediaTypeFormatter(MessagePackMediaTypeFormatter formatter)
             : base(formatter)
         {
-            Options = formatter.Options;
+            SerializerOptions = formatter.SerializerOptions;
         }
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace System.Net.Http.Formatting
         /// <param name="options">Options for running serialization.</param>
         public MessagePackMediaTypeFormatter(MessagePackSerializerOptions options)
         {
-            Options = options ?? throw new ArgumentNullException(nameof(options));
+            SerializerOptions = options ?? throw new ArgumentNullException(nameof(options));
             SupportedMediaTypes.Add(MessagePackDefaults.MediaTypeHeaders.ApplicationXMessagePack);
             SupportedMediaTypes.Add(MessagePackDefaults.MediaTypeHeaders.ApplicationMessagePack);
         }
@@ -42,7 +42,7 @@ namespace System.Net.Http.Formatting
         /// <summary>
         ///     Options for running the serialization.
         /// </summary>
-        public MessagePackSerializerOptions Options { get; }
+        public MessagePackSerializerOptions SerializerOptions { get; }
 
         /// <inheritdoc />
         public override async Task<object> ReadFromStreamAsync(Type type, Stream readStream, HttpContent content,
@@ -50,25 +50,16 @@ namespace System.Net.Http.Formatting
         {
             if (type is null) throw new ArgumentNullException(nameof(type));
             if (readStream is null) throw new ArgumentNullException(nameof(readStream));
+            if (content == null) throw new ArgumentNullException(nameof(content));
 
-            if (readStream.Length == 0) return null;
-
-            using (var memoryStrem = new MemoryStream())
-            {
-                await readStream.CopyToAsync(memoryStrem, 81920, cancellationToken).ConfigureAwait(false);
-                if (memoryStrem.Length == 0) return null;
-
-                memoryStrem.Position = 0;
-                return await MessagePackSerializer.DeserializeAsync(type, memoryStrem, Options, cancellationToken)
-                    .ConfigureAwait(false);
-            }
+            return await content.ReadFromMessagePackAsync(type, SerializerOptions, cancellationToken).ConfigureAwait(false);
         }
 
         /// <inheritdoc />
-        public override async Task<object> ReadFromStreamAsync(Type type, Stream readStream, HttpContent content,
+        public override Task<object> ReadFromStreamAsync(Type type, Stream readStream, HttpContent content,
             IFormatterLogger formatterLogger)
         {
-            return await ReadFromStreamAsync(type, readStream, content, formatterLogger, CancellationToken.None);
+            return ReadFromStreamAsync(type, readStream, content, formatterLogger, CancellationToken.None);
         }
 
         /// <inheritdoc />
@@ -78,18 +69,18 @@ namespace System.Net.Http.Formatting
         {
             if (type is null) throw new ArgumentNullException(nameof(type));
             if (writeStream is null) throw new ArgumentNullException(nameof(writeStream));
+            if (content == null) throw new ArgumentNullException(nameof(content));
 
-            if (value is null) return;
-
-            await MessagePackSerializer.SerializeAsync(type, writeStream, value, Options, cancellationToken)
-                .ConfigureAwait(false);
+            var messagePackContent = content as MessagePackContent ?? MessagePackContent.Create(value, type, SerializerOptions);
+            await messagePackContent.CopyToAsync(writeStream).ConfigureAwait(false);
+            content.Headers.ContentLength = messagePackContent.Headers.ContentLength;
         }
 
         /// <inheritdoc />
-        public override async Task WriteToStreamAsync(Type type, object value, Stream writeStream, HttpContent content,
+        public override Task WriteToStreamAsync(Type type, object value, Stream writeStream, HttpContent content,
             TransportContext transportContext)
         {
-            await WriteToStreamAsync(type, value, writeStream, content, transportContext, CancellationToken.None);
+            return WriteToStreamAsync(type, value, writeStream, content, transportContext, CancellationToken.None);
         }
 
         /// <inheritdoc />

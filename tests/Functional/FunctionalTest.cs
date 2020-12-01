@@ -7,12 +7,12 @@ using Xunit;
 
 namespace System.Net.Http.Formatting.Functional
 {
-    public class MessagePackMediaTypeFormatterFunctionalTest : MvcTestFixture
+    public class FunctionalTest : MvcTestFixture
     {
         private readonly MessagePackMediaTypeFormatter _formatter;
         private readonly MessagePackSerializerOptions _options;
 
-        public MessagePackMediaTypeFormatterFunctionalTest()
+        public FunctionalTest()
         {
             _options = MessagePackSerializerOptions.Standard;
             _formatter = new MessagePackMediaTypeFormatter(_options);
